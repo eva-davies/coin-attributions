@@ -1,0 +1,16 @@
+{
+  "name": "coin_attributions_api",
+  "version": "1.0.0",
+  "description": "Coin Attributions API",
+  "main": "start.js",
+  "scripts": {
+    "start": "node start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Eva Chipana",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3"
+  }
+}
