@@ -1,4 +1,5 @@
 const healthCheck = require('./health-check');
+const variety = require('./variety');
 
 module.exports = (app) => {
   app.use((req, res, next) => {
@@ -8,4 +9,5 @@ module.exports = (app) => {
   });
 
   app.use('/health-check', healthCheck);
+  app.use('/variety', variety);
 };
