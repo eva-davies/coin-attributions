@@ -1,4 +1,5 @@
 'use strict';
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('measures', {
@@ -10,7 +11,11 @@ module.exports = {
       },
       varietyId: {
         type: Sequelize.INTEGER,
-        allowNull: false,       
+        allowNull: false,
+        references: {        
+          model: 'varieties',           
+          key: 'id',                 
+        }         
       },
       isObverse: {
         type: Sequelize.BOOLEAN
