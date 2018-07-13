@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     notes: DataTypes.TEXT('tiny')
   }, {});
   varieties.associate = (models) => {
-    // associations can be defined here
+    varieties.hasMany(models.measures);
   };
   return varieties;
 };

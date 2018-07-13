@@ -18,8 +18,8 @@ module.exports = (sequelize, DataTypes) => {
     distance: DataTypes.FLOAT,
     angle: DataTypes.FLOAT
   }, {});
-  measures.associate = (models) => {    
-    measures.belongsTo(models.varieties);   
+  measures.associate = (models) => {        
+    
   };
   return measures;
 };
