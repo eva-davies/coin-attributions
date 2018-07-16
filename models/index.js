@@ -43,7 +43,7 @@ sequelize
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-db.variety = require('./varieties')(sequelize, Sequelize);
-db.measure = require('./measures')(sequelize, Sequelize);
+db.Variety = require('./varieties')(sequelize, Sequelize);
+db.Measure = require('./measures')(sequelize, Sequelize);
 
 module.exports = db;

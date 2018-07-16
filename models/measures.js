@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = (sequelize, DataTypes) => {
-  const measures = sequelize.define('measures', {
+  const Measure = sequelize.define('measures', {
     id: { 
       type: DataTypes.INTEGER, 
       allowNull: false,
@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     },    
     varietyId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: false,           
     },
     isObverse: DataTypes.BOOLEAN,
     measureType: DataTypes.STRING(20),
@@ -18,8 +18,8 @@ module.exports = (sequelize, DataTypes) => {
     distance: DataTypes.FLOAT,
     angle: DataTypes.FLOAT
   }, {});
-  measures.associate = (models) => {        
-    
+  Measure.associate = (models) => {        
+    Measure.belongsTo(models.varieties);
   };
-  return measures;
+  return Measure;
 };

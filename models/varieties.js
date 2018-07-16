@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = (sequelize, DataTypes) => {
-  const varieties = sequelize.define('varieties', {
+  const Variety = sequelize.define('varieties', {
     id: { 
       type: DataTypes.INTEGER, 
       allowNull: false,
@@ -13,8 +13,8 @@ module.exports = (sequelize, DataTypes) => {
     rarity: DataTypes.STRING(1),
     notes: DataTypes.TEXT('tiny')
   }, {});
-  varieties.associate = (models) => {
-    varieties.hasMany(models.measures);
+  Variety.associate = (models) => {
+    Variety.hasMany(models.measures);
   };
-  return varieties;
+  return Variety;
 };
