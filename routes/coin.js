@@ -40,17 +40,9 @@ router.post('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    console.log('[GET] /coin', JSON.stringify(req.params.id) || '');
+    console.log('[GET] /coin', JSON.stringify(req.params.id) || '');    
     const coin = await Variety.findById(req.params.id);
     const measures = await Measure.findAll({ where: { varietyId: coin.id}});
-    
-    const response = await Variety.findAll({
-      include: [{ 
-        model: Measure
-      }]
-    });
-    console.log(`COIN ${JSON.stringify(coin)}`);
-    
     res
       .status(200)
       .send({
