@@ -10,7 +10,13 @@ Install the latest LTS version of [Node](https://nodejs.org/en/)
 
 Install [MySQL](https://dev.mysql.com/downloads/mysql/)
 
-# How to run application
+Create MySQL DB
+
+```
+create database <database_name>;
+```
+
+# Setup Application
 
 1. Clone the repository and navigate to project root
 
@@ -24,27 +30,29 @@ $ git clone https://github.com/eva-chipana/coin-attributions.git && cd coin-attr
 $ npm install
 ```
 
-3. Start the application
+3. Copy the .env.sample file to .env
+
+```
+cp .env.sample .env
+```
+
+# How to Run Application
+
+1. Start the application
 
 ```
 $ npm run start
 ```
 
-4. Create MySQL DB
+2. Migrations 
 
 ```
-create database coins;
-```
-
-5. Run Migrations 
-
-```
+# Run Migrations
 node_modules/.bin/sequelize db:migrate
-```
 
-```
-# Undo migrate
+# Undo Migrations
 node_modules/.bin/sequelize db:migrate:undo:all
 ```
+
 
 
