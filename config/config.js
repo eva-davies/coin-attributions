@@ -1,5 +1,3 @@
-const Op = require('sequelize').Op;
-
 module.exports = {  
   development: {
     username: process.env.DB_USERNAME,
@@ -8,7 +6,7 @@ module.exports = {
     host: process.env.DB_HOSTNAME,
     port: process.env.DB_PORT,
     dialect: 'mysql',
-    operatorsAliases: Op
+    operatorsAliases: false
   },
   test: {
     username: 'database_test',

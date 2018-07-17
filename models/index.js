@@ -8,6 +8,16 @@ const env       = process.env.NODE_ENV || 'development';
 const config    = require(__dirname + '/../config/config.js')[env];
 const db        = {};
 
+const authenticate = async connection => {
+  try {
+    await connection.authenticate();
+    console.log(`${config.dialect} DB Successful Connection`);
+    return true;
+  } catch (error) {
+    console.error(`Unable to Connect to the ${config.dialect} DB:`, error);
+  }
+}
+
 const sequelize = new Sequelize(config.database, config.username, config.password, config);
 
 fs
@@ -26,14 +36,7 @@ Object.keys(db).forEach(modelName => {
   }
 });
 
-sequelize
-		.authenticate()
-		.then(() => {
-			console.log('Connection has been established successfully.');
-		})
-		.catch((err) => {
-			console.log('Unable to connect to the database:', err);
-		});
+authenticate(sequelize);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
