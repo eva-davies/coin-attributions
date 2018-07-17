@@ -5,32 +5,31 @@ const router = express.Router();
 
 const Variety = require('../models').Variety;
 const Measure = require('../models').Measure;
+const sequelize = require('../models').sequelize;
 
 router.post('/', async (req, res) => {  
   try {
     console.log('[POST] /coin', JSON.stringify(req.body));    
     const { year, overtonNumber, rarity, notes, measures } = req.body;
-    const variety = await Variety.create({
+
+    Variety.hasMany(Measure)
+    Measure.belongsTo(Variety);
+
+    await sequelize.sync();
+
+    const coin = await Variety.create({
       year: year,
       overtonNumber: overtonNumber,
       rarity: rarity,
-      notes: notes    
+      notes: notes,
+      measures: measures         
+    }, {
+      include: [ Measure ]
     });
-    
-    let measuresResponse = [];
-    measuresResponse = await Promise.all(
-      measures.map(async data => {
-        const payload = Object.assign({}, data, { varietyId: variety.id });
-        return await Measure.create(payload);                
-      })
-    );
 
     res
       .status(200)
-      .send({
-        variety: variety,
-        measures: measuresResponse
-      })
+      .send(coin)
       .end();     
   } catch (error) {
     console.error('[POST] /coin Error:', JSON.stringify(error));
@@ -40,15 +39,19 @@ router.post('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    console.log('[GET] /coin', JSON.stringify(req.params.id) || '');    
-    const coin = await Variety.findById(req.params.id);
-    const measures = await Measure.findAll({ where: { varietyId: coin.id}});
+    console.log('[GET] /coin', JSON.stringify(req.params.id) || '');
+    Variety.hasMany(Measure)
+    Measure.belongsTo(Variety);
+
+    await sequelize.sync();
+    const coin = await Variety.findAll({ 
+      where: { id: req.params.id },
+      include: [ Measure ]
+    });
+
     res
       .status(200)
-      .send({
-        coin,
-        measures
-      })
+      .send(coin)
       .end();
   } catch (error) {
     console.error('[GET] /coin Error:', JSON.stringify(error.message));
