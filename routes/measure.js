@@ -8,7 +8,9 @@ const Measure = require('../models').Measure;
 const sequelize = require('../models').sequelize;
 
 router.get('/distance/', async (req, res) => {
-  console.log(`[GET] /measure/distance year: ${req.query.variety.year || ''} overtonNumber: ${req.query.variety.overtonNumber || ''} measureType: ${req.query.measureType || ''}`);
+  console.log(`[GET] /measure/distance year: ${req.query.variety.year || ''} 
+    overtonNumber: ${req.query.variety.overtonNumber || ''} 
+    measureType: ${req.query.measureType || ''}`);
   try {
     Variety.hasMany(Measure)
     Measure.belongsTo(Variety);
@@ -53,17 +55,17 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/:variertyId', async (req, res) => {  
+router.post('/:varietyId', async (req, res) => {  
   try {
-    console.log('[POST] /measure', `variertyId: ${req.params.variertyId}`, JSON.stringify(req.body));
-    const payload = Object.assign({}, req.body, { varietyId: req.params.variertyId });    
+    console.log(`[POST] /measure/${req.params.varietyId || ''}`, JSON.stringify(req.body));
+    const payload = {...req.body, varietyId: req.params.varietyId};    
     const response = await Measure.create(payload);
     res
       .status(200)
       .send(response)
       .end();     
   } catch (error) {
-    console.error('[POST] /measure Error:', JSON.stringify(error));
+    console.error(`[POST] /measure/${req.params.varietyId || ''} Error:`, JSON.stringify(error));
     res.status(500).send(error.message || {});
   }
 
