@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,           
     },
     isObverse: DataTypes.BOOLEAN,
-    measureType: DataTypes.STRING(20),
+    type: DataTypes.STRING(20),
     measureNumber: DataTypes.INTEGER,
     distance: DataTypes.FLOAT,
     angle: DataTypes.FLOAT

@@ -20,7 +20,7 @@ module.exports = {
       isObverse: {
         type: Sequelize.BOOLEAN
       },
-      measureType: {
+      type: {
         type: Sequelize.STRING(20)
       },
       measureNumber: {
