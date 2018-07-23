@@ -7,6 +7,46 @@ const Variety = require('../models').Variety;
 
 const RECORD_NOT_FOUND = 'Record not Found';
 
+router.get('/year/:year', async (req, res) => {
+  try {
+    console.log(`[GET] /variety/year year: ${req.params.year || ''}`);    
+
+    const response = await Variety.findAll({ 
+      attributes: ['overtonNumber'],
+      where: { year: req.params.year},
+      order: [['overtonNumber', 'ASC']]
+    });
+    res
+      .status(200)
+      .send(response)
+      .end();    
+  } catch (error) {
+    console.error('[GET] /variety/year Error:', JSON.stringify(error));
+    res.status(500).send(error || {});
+  }
+});
+
+router.get('/description', async (req, res) => {
+  try {
+    console.log(`[GET] /variety/description year: ${req.query.year || ''}
+    overtonNumber: ${req.query.overtonNumber || ''}`);    
+
+    const response = await Variety.findAll({ 
+      attributes: ['rarity', 'notes'],
+      where: { year: req.query.year,  
+        overtonNumber: req.query.overtonNumber},
+      order: [['overtonNumber', 'ASC']]
+    });
+    res
+      .status(200)
+      .send(response)
+      .end();    
+  } catch (error) {
+    console.error('[GET] /variety/description Error:', JSON.stringify(error));
+    res.status(500).send(error || {});
+  }
+});
+
 router.get('/:id', async (req, res) => {
   try {
     console.log('[GET] /variety', req.params.id);

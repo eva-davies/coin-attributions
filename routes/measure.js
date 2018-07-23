@@ -9,20 +9,19 @@ const sequelize = require('../models').sequelize;
 
 const RECORD_NOT_FOUND = 'Record not Found';
 
-router.get('/distance/', async (req, res) => {
-  console.log(`[GET] /measure/distance year: ${req.query.variety.year || ''} 
-    overtonNumber: ${req.query.variety.overtonNumber || ''} 
-    type: ${req.query.type || ''}`);
+router.get('/:field', async (req, res) => {
+  console.log(`[GET] /measure/${req.params.field || ''} year: ${req.query.variety.year || ''} 
+    overtonNumber: ${req.query.variety.overtonNumber || ''} type: ${req.query.type || ''}`);
   try {
     Variety.hasMany(Measure)
     Measure.belongsTo(Variety);
 
     await sequelize.sync();
-
+    
     const response = await Measure.findAll({ 
-      attributes: ['distance'],
+      attributes: [req.params.field],
       where: { type: req.query.type },
-      order: [['measureNumber', 'ASC']],
+      order: [ [Variety, 'year', 'ASC'], [Variety, 'overtonNumber', 'ASC'], ['type', 'ASC'], ['measureNumber', 'ASC'] ],
       include: [{ 
         model: Variety,
         attributes: [],
@@ -32,10 +31,10 @@ router.get('/distance/', async (req, res) => {
         }
       }]
     });
-
+        
     res
       .status(200)
-      .send(response)
+      .send(response.map(object => object[req.params.field]))
       .end();
   } catch (error) {
     console.error('[GET] /measure Error:', JSON.stringify(error));
