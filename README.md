@@ -8,9 +8,52 @@ Install the latest LTS version of [Node](https://nodejs.org/en/)
 
 # MySQL
 
-Install [MySQL](https://dev.mysql.com/downloads/mysql/)
+Installation steps using [Homebrew](https://brew.sh/)
 
-Create MySQL DB
+1. Install MySQL
+
+```
+brew install mysql
+```
+
+2. Verify MySQL is installed:
+
+```
+mysql -V
+```
+
+3. MySQL configuration
+
+```
+Binary files are installed under: /usr/local/opt/mysql/bin
+Main configuration file is created at: /usr/local/etc/my.cnf
+```
+
+4. Install brew services:
+
+```
+brew tap homebrew/services
+```
+
+5. Load and start the MySQL service:
+
+```
+brew services start mysql
+```
+
+6. Set root password
+
+```
+mysql_secure_installation
+```
+
+7. Connect to the MySQl server
+
+```
+mysql -u root -p
+```
+
+8. Create MySQL DB
 
 ```
 create database <database_name>;
@@ -53,6 +96,3 @@ node_modules/.bin/sequelize db:migrate
 # Undo Migrations
 node_modules/.bin/sequelize db:migrate:undo:all
 ```
-
-
-
